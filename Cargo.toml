@@ -1,0 +1,7 @@
+[package]
+name = "gh_issues_to_csv"
+version = "0.1.0"
+authors = ["Thomas Martin <thomas@oopss.org>"]
+edition = "2018"
+
+[dependencies]
