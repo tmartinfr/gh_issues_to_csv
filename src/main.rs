@@ -20,24 +20,25 @@ fn main() {
 
     for issue in issues.iter() {
         // Extract issue's labels
-        let labels: Vec<String> = issue
+        let labels = issue
             .labels
             .iter()
-            .map(|label| label.name.to_string())
-            .collect();
+            .map(|label| label.name.clone())
+            .collect::<Vec<String>>()
+            .join(", ");
         // Gather CSV fields
         let output = vec![
-            issue.title.to_string(),
-            labels.join(", "),
-            issue.created_at.to_string(),
-            issue.html_url.to_string(),
-            issue.body.to_string(),
+            &issue.title,
+            &labels,
+            &issue.created_at,
+            &issue.html_url,
+            &issue.body,
         ];
         // Escape and add quotes around each field
         let output: Vec<String> = output
             .iter()
-            .map(|field| field.to_string().replace("\"", "\"\""))
-            .map(|field| ["\"", &field, "\""].concat())
+            .map(|field| field.replace("\"", "\"\""))
+            .map(|field| format!("\"{}\"", &field))
             .collect();
         // Build final line
         let output = output.join(",") + "\n";
